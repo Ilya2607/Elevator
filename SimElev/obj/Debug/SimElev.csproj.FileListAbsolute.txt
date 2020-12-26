@@ -1,0 +1,20 @@
+C:\Users\Dmitry\source\repos\SimElev\SimElev\bin\Debug\SimElev.exe.config
+C:\Users\Dmitry\source\repos\SimElev\SimElev\bin\Debug\SimElev.exe
+C:\Users\Dmitry\source\repos\SimElev\SimElev\bin\Debug\SimElev.pdb
+C:\Users\Dmitry\source\repos\SimElev\SimElev\obj\Debug\SimElev.csprojAssemblyReference.cache
+C:\Users\Dmitry\source\repos\SimElev\SimElev\obj\Debug\SimElev.Properties.Resources.resources
+C:\Users\Dmitry\source\repos\SimElev\SimElev\obj\Debug\SimElev.csproj.GenerateResource.cache
+C:\Users\Dmitry\source\repos\SimElev\SimElev\obj\Debug\SimElev.csproj.CoreCompileInputs.cache
+C:\Users\Dmitry\source\repos\SimElev\SimElev\obj\Debug\SimElev.exe
+C:\Users\Dmitry\source\repos\SimElev\SimElev\obj\Debug\SimElev.pdb
+C:\Users\Dmitry\source\repos\SimElev\SimElev\obj\Debug\SimElev.MainForm.resources
+C:\Users\ilya2\OneDrive\Рабочий стол\SimElev\SimElev\bin\Debug\SimElev.exe.config
+C:\Users\ilya2\OneDrive\Рабочий стол\SimElev\SimElev\bin\Debug\SimElev.exe
+C:\Users\ilya2\OneDrive\Рабочий стол\SimElev\SimElev\bin\Debug\SimElev.pdb
+C:\Users\ilya2\OneDrive\Рабочий стол\SimElev\SimElev\obj\Debug\SimElev.csprojAssemblyReference.cache
+C:\Users\ilya2\OneDrive\Рабочий стол\SimElev\SimElev\obj\Debug\SimElev.MainForm.resources
+C:\Users\ilya2\OneDrive\Рабочий стол\SimElev\SimElev\obj\Debug\SimElev.Properties.Resources.resources
+C:\Users\ilya2\OneDrive\Рабочий стол\SimElev\SimElev\obj\Debug\SimElev.csproj.GenerateResource.cache
+C:\Users\ilya2\OneDrive\Рабочий стол\SimElev\SimElev\obj\Debug\SimElev.csproj.CoreCompileInputs.cache
+C:\Users\ilya2\OneDrive\Рабочий стол\SimElev\SimElev\obj\Debug\SimElev.exe
+C:\Users\ilya2\OneDrive\Рабочий стол\SimElev\SimElev\obj\Debug\SimElev.pdb
