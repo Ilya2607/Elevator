@@ -20,8 +20,10 @@ namespace SimElev
         private Stopwatch stopwatch = new Stopwatch();
         private Settings settings;
         private int monkeyCount;
+        private int[] elevMonkeyCount;
         private bool pauseChecked = false;
         private bool SOSChecked = false;
+        private bool[] flag;
         public MainForm()
         {
             InitializeComponent();
@@ -36,15 +38,20 @@ namespace SimElev
             else
             {
                 textBox.Clear();
-                settings = new Settings(10, 1);
+                settings = new Settings(10, 5);
                 pictureBox.Image = new Bitmap(pictureBox.Width, pictureBox.Height);
                 graphics = Graphics.FromImage(pictureBox.Image);
                 elevator = new Elevator[settings.GetSettingNumOfElev()];
-                monkeyCount = -settings.GetSettingNumOfElev();
+                monkeyCount = 0;
+                elevMonkeyCount = new int[settings.GetSettingNumOfElev()];
+                flag = new bool[settings.GetSettingNumOfElev()];
                 for (int i = 0; i < settings.GetSettingNumOfElev(); i++)
                 {
                     elevator[i] = new Elevator(random.Next(1, 3), random.Next(4, 8), settings.GetSettingLevel());
+                    elevMonkeyCount[i] = 0;
+                    flag[i] = false;
                 }
+                textBox.AppendText("Start! All elevators went to their floor" + Environment.NewLine);
             }            
             stopwatch.Start();
             timer.Start();            
@@ -75,7 +82,11 @@ namespace SimElev
                 SOSChecked = false;
                 textBox.AppendText("SOS is canceled! All elevators went to their floor" + Environment.NewLine);
             }
-          
+            else
+            { 
+                SOSChecked = true;
+                textBox.AppendText("SOS! All elevators went to the first floor " + Environment.NewLine);
+            }
         }
         private void DrawHouse()
         {
@@ -106,7 +117,7 @@ namespace SimElev
             Pen liftPen = new Pen(Color.Red, 4);
             graphics.Clear(Color.White);
             DrawHouse();
-
+            
             toolStripStatusLabelTimeSim.Text = String.Format("{0:00}:{1:00}:{2:00}:{3:00}", stopwatch.Elapsed.Hours, stopwatch.Elapsed.Minutes, stopwatch.Elapsed.Seconds, stopwatch.Elapsed.Milliseconds / 10);
             toolStripStatusLabelMonkeyCount.Text = monkeyCount.ToString();
 
@@ -129,7 +140,7 @@ namespace SimElev
                         }                        
                     }
                     else
-                    {                        
+                    {
                         if (elevator[i].GetLevel() > elevator[i].GetNextLevel())
                         {
                             elevator[i].SetCoordinate(elevator[i].GetCoordinate() + (elevator[i].GetSpeed() * elevator[i].GetAcceleration()));
@@ -140,13 +151,35 @@ namespace SimElev
                         }
                         else
                         {
-                            textBox.AppendText($"The elevator {i + 1} arrived on the floor " + elevator[i].GetNextLevel().ToString() + Environment.NewLine);
-                            monkeyCount++;
-                            while(elevator[i].GetLevel()== elevator[i].GetNextLevel())
+                            if (flag[i])
                             {
-                                elevator[i].SetNextLevel(random.Next(1, settings.GetSettingLevel()));
-                            }                            
-                            textBox.AppendText($"The elevator {i + 1} went to the floor " + elevator[i].GetNextLevel().ToString() + Environment.NewLine);                            
+                                textBox.AppendText($"The Monkey {elevMonkeyCount[i]} on elevator {i + 1} arrived at floor " + elevator[i].GetNextLevel().ToString() + Environment.NewLine);
+                            }
+                            else if (monkeyCount != 0)
+                            {
+                                textBox.AppendText($"The elevator {i + 1} arrived at floor " + elevator[i].GetNextLevel().ToString() + Environment.NewLine);
+                            }
+                            int rand = random.Next(0, 2);
+                            if (rand == 1)
+                            {
+                                flag[i] = true;
+                                while (elevator[i].GetLevel() == elevator[i].GetNextLevel())
+                                {
+                                    elevator[i].SetNextLevel(random.Next(1, settings.GetSettingLevel()));
+                                }
+                                monkeyCount++;
+                                elevMonkeyCount[i]++;
+                                textBox.AppendText($"The Monkey {elevMonkeyCount[i]} on elevator {i + 1} went to floor " + elevator[i].GetNextLevel().ToString() + Environment.NewLine);
+                            }
+                            else
+                            {
+                                flag[i] = false;
+                                while (elevator[i].GetLevel() == elevator[i].GetNextLevel())
+                                {
+                                    elevator[i].SetNextLevel(random.Next(1, settings.GetSettingLevel()));
+                                }
+                                textBox.AppendText($"The elevator {i + 1} went to floor " + elevator[i].GetNextLevel().ToString() + Environment.NewLine);
+                            }
                         }
                     }
                 });
