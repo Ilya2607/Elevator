@@ -19,7 +19,7 @@ namespace SimElev
         private Random random = new Random();
         private Stopwatch stopwatch = new Stopwatch();
         private Settings settings;
-        private int monkeyCount = 0;
+        private int monkeyCount;
         private bool pauseChecked = false;
         private bool SOSChecked = false;
         public MainForm()
@@ -36,10 +36,11 @@ namespace SimElev
             else
             {
                 textBox.Clear();
-                settings = new Settings(20, 5);
+                settings = new Settings(10, 1);
                 pictureBox.Image = new Bitmap(pictureBox.Width, pictureBox.Height);
                 graphics = Graphics.FromImage(pictureBox.Image);
                 elevator = new Elevator[settings.GetSettingNumOfElev()];
+                monkeyCount = -settings.GetSettingNumOfElev();
                 for (int i = 0; i < settings.GetSettingNumOfElev(); i++)
                 {
                     elevator[i] = new Elevator(random.Next(1, 3), random.Next(4, 8), settings.GetSettingLevel());
@@ -68,15 +69,13 @@ namespace SimElev
             pauseChecked = true;
         }
         private void SosSimulation()
-        {
+        {            
             if (SOSChecked)
             {
                 SOSChecked = false;
+                textBox.AppendText("SOS is canceled! All elevators went to their floor" + Environment.NewLine);
             }
-            else
-            {
-                SOSChecked = true;
-            }
+          
         }
         private void DrawHouse()
         {
@@ -125,9 +124,9 @@ namespace SimElev
                             elevator[i].SetCoordinate(elevator[i].GetCoordinate() + (elevator[i].GetSpeed() * elevator[i].GetAcceleration()));
                         }
                         else
-                        {
+                        {                            
                             elevator[i].SetCoordinate(elevator[i].GetCoordinate());
-                        }
+                        }                        
                     }
                     else
                     {                        
@@ -143,8 +142,11 @@ namespace SimElev
                         {
                             textBox.AppendText($"The elevator {i + 1} arrived on the floor " + elevator[i].GetNextLevel().ToString() + Environment.NewLine);
                             monkeyCount++;
-                            elevator[i].SetNextLevel(random.Next(1, settings.GetSettingLevel()));
-                            textBox.AppendText($"The elevator {i + 1} went to the floor " + elevator[i].GetNextLevel().ToString() + Environment.NewLine);
+                            while(elevator[i].GetLevel()== elevator[i].GetNextLevel())
+                            {
+                                elevator[i].SetNextLevel(random.Next(1, settings.GetSettingLevel()));
+                            }                            
+                            textBox.AppendText($"The elevator {i + 1} went to the floor " + elevator[i].GetNextLevel().ToString() + Environment.NewLine);                            
                         }
                     }
                 });
@@ -180,11 +182,6 @@ namespace SimElev
         private void trackBar_Scroll(object sender, EventArgs e)
         {
            
-        }
-
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }
